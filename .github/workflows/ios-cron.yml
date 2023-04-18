@@ -1,8 +1,8 @@
-name: iOS starter workflow
+name: iOS crib scheduled workflow
 
 on:
   schedule:
-   - cron: '*/20 * * * *'
+   - cron: '0 0 * * *'
 
 jobs:
   build:
