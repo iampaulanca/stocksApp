@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC0DEEDD29EE03B000E249B6 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0DEEDC29EE03B000E249B6 /* Test.swift */; };
 		FC3AAB1C29ED9EFF0027AFDC /* innovation041023App.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3AAB1B29ED9EFF0027AFDC /* innovation041023App.swift */; };
 		FC3AAB1E29ED9EFF0027AFDC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3AAB1D29ED9EFF0027AFDC /* ContentView.swift */; };
 		FC3AAB2029ED9F000027AFDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC3AAB1F29ED9F000027AFDC /* Assets.xcassets */; };
@@ -14,6 +15,11 @@
 		FC3AAB2D29ED9F000027AFDC /* innovation041023Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3AAB2C29ED9F000027AFDC /* innovation041023Tests.swift */; };
 		FC3AAB3729ED9F000027AFDC /* innovation041023UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3AAB3629ED9F000027AFDC /* innovation041023UITests.swift */; };
 		FC3AAB3929ED9F000027AFDC /* innovation041023UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3AAB3829ED9F000027AFDC /* innovation041023UITestsLaunchTests.swift */; };
+		FC3AAB4929EDA3680027AFDC /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3AAB4829EDA3680027AFDC /* Service.swift */; };
+		FC3AAB4B29EDA38E0027AFDC /* AllModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3AAB4A29EDA38E0027AFDC /* AllModels.swift */; };
+		FC3AAB4D29EDB1600027AFDC /* StocksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3AAB4C29EDB1600027AFDC /* StocksViewModel.swift */; };
+		FC3AAB4F29EDD04F0027AFDC /* StockDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3AAB4E29EDD04F0027AFDC /* StockDetailView.swift */; };
+		FC3AAB5129EDDA120027AFDC /* AddStockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3AAB5029EDDA120027AFDC /* AddStockView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FC0DEEDC29EE03B000E249B6 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		FC3AAB1829ED9EFF0027AFDC /* innovation041023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = innovation041023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC3AAB1B29ED9EFF0027AFDC /* innovation041023App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = innovation041023App.swift; sourceTree = "<group>"; };
 		FC3AAB1D29ED9EFF0027AFDC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,6 +51,11 @@
 		FC3AAB3229ED9F000027AFDC /* innovation041023UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = innovation041023UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC3AAB3629ED9F000027AFDC /* innovation041023UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = innovation041023UITests.swift; sourceTree = "<group>"; };
 		FC3AAB3829ED9F000027AFDC /* innovation041023UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = innovation041023UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FC3AAB4829EDA3680027AFDC /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		FC3AAB4A29EDA38E0027AFDC /* AllModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllModels.swift; sourceTree = "<group>"; };
+		FC3AAB4C29EDB1600027AFDC /* StocksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewModel.swift; sourceTree = "<group>"; };
+		FC3AAB4E29EDD04F0027AFDC /* StockDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailView.swift; sourceTree = "<group>"; };
+		FC3AAB5029EDDA120027AFDC /* AddStockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStockView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,8 +106,10 @@
 		FC3AAB1A29ED9EFF0027AFDC /* innovation041023 */ = {
 			isa = PBXGroup;
 			children = (
+				FC3AAB4729EDA3480027AFDC /* VIews */,
+				FC3AAB4629EDA3400027AFDC /* ViewModel */,
+				FC3AAB4529EDA3380027AFDC /* Model */,
 				FC3AAB1B29ED9EFF0027AFDC /* innovation041023App.swift */,
-				FC3AAB1D29ED9EFF0027AFDC /* ContentView.swift */,
 				FC3AAB1F29ED9F000027AFDC /* Assets.xcassets */,
 				FC3AAB2129ED9F000027AFDC /* Preview Content */,
 			);
@@ -125,6 +139,34 @@
 				FC3AAB3829ED9F000027AFDC /* innovation041023UITestsLaunchTests.swift */,
 			);
 			path = innovation041023UITests;
+			sourceTree = "<group>";
+		};
+		FC3AAB4529EDA3380027AFDC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FC3AAB4A29EDA38E0027AFDC /* AllModels.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FC3AAB4629EDA3400027AFDC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FC3AAB4829EDA3680027AFDC /* Service.swift */,
+				FC3AAB4C29EDB1600027AFDC /* StocksViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		FC3AAB4729EDA3480027AFDC /* VIews */ = {
+			isa = PBXGroup;
+			children = (
+				FC3AAB1D29ED9EFF0027AFDC /* ContentView.swift */,
+				FC3AAB4E29EDD04F0027AFDC /* StockDetailView.swift */,
+				FC3AAB5029EDDA120027AFDC /* AddStockView.swift */,
+				FC0DEEDC29EE03B000E249B6 /* Test.swift */,
+			);
+			path = VIews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +299,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC3AAB4D29EDB1600027AFDC /* StocksViewModel.swift in Sources */,
 				FC3AAB1E29ED9EFF0027AFDC /* ContentView.swift in Sources */,
 				FC3AAB1C29ED9EFF0027AFDC /* innovation041023App.swift in Sources */,
+				FC3AAB4929EDA3680027AFDC /* Service.swift in Sources */,
+				FC3AAB5129EDDA120027AFDC /* AddStockView.swift in Sources */,
+				FC0DEEDD29EE03B000E249B6 /* Test.swift in Sources */,
+				FC3AAB4F29EDD04F0027AFDC /* StockDetailView.swift in Sources */,
+				FC3AAB4B29EDA38E0027AFDC /* AllModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
