@@ -29,5 +29,9 @@ final class innovation041023Tests: XCTestCase {
     func testExample2() throws {
         XCTAssert(1 == 1)
     }
+    
+    func testExample3() throws {
+        XCTAssertFalse(1 == 2)
+    }
 
 }
