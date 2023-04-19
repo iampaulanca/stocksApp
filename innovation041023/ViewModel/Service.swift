@@ -18,7 +18,11 @@ extension NetworkError: LocalizedError {
     }
 }
 
-class Service {
+protocol ServiceProtocol {
+    func fetchStockPricesWithInterval(symbol: String, range: Range) async throws -> Response
+}
+
+class Service: ServiceProtocol {
     func fetchStockPricesWithInterval(symbol: String, range: Range) async throws -> Response {
         var interval: Interval = .oneMonth
         switch range {

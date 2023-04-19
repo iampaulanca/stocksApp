@@ -33,5 +33,23 @@ final class innovation041023Tests: XCTestCase {
     func testExample3() throws {
         XCTAssertFalse(1 == 2)
     }
-
+    
+    func testFetchStockPricesWithInterval_SuccessfulResponse_OneWeekRange() async throws {
+            // Given
+            let mockService = MockService()
+            let symbol = "GOOG"
+            let range = Range.oneWeek
+            let expectedURL = URL(string: "https://query1.finance.yahoo.com/v8/finance/chart/AAPL?interval=1d&range=1mo")!
+            let expectedResponse = mockResponse
+            mockService.fetchStockPricesWithIntervalReturnValue = expectedResponse
+            let service = mockService
+            // When
+            let result = try await service.fetchStockPricesWithInterval(symbol: symbol, range: range)
+            
+            // Then
+            XCTAssertTrue(mockService.fetchStockPricesWithIntervalCalled)
+            XCTAssertEqual(mockService.fetchStockPricesWithIntervalSymbol, symbol)
+            XCTAssertEqual(mockService.fetchStockPricesWithIntervalRange, range)
+            XCTAssertEqual(result, expectedResponse)
+        }
 }

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FC0DEEDD29EE03B000E249B6 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0DEEDC29EE03B000E249B6 /* Test.swift */; };
+		FC0DEEE129F055BA00E249B6 /* ServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0DEEE029F055BA00E249B6 /* ServiceMock.swift */; };
 		FC3AAB1C29ED9EFF0027AFDC /* innovation041023App.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3AAB1B29ED9EFF0027AFDC /* innovation041023App.swift */; };
 		FC3AAB1E29ED9EFF0027AFDC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3AAB1D29ED9EFF0027AFDC /* ContentView.swift */; };
 		FC3AAB2029ED9F000027AFDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC3AAB1F29ED9F000027AFDC /* Assets.xcassets */; };
@@ -40,7 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FC0DEEDC29EE03B000E249B6 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		FC0DEEE029F055BA00E249B6 /* ServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceMock.swift; sourceTree = "<group>"; };
 		FC3AAB1829ED9EFF0027AFDC /* innovation041023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = innovation041023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC3AAB1B29ED9EFF0027AFDC /* innovation041023App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = innovation041023App.swift; sourceTree = "<group>"; };
 		FC3AAB1D29ED9EFF0027AFDC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -83,6 +83,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FC0DEEDE29F0559F00E249B6 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				FC0DEEDF29F055AA00E249B6 /* Mocks */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		FC0DEEDF29F055AA00E249B6 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				FC0DEEE029F055BA00E249B6 /* ServiceMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		FC3AAB0F29ED9EFF0027AFDC = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +122,7 @@
 		FC3AAB1A29ED9EFF0027AFDC /* innovation041023 */ = {
 			isa = PBXGroup;
 			children = (
+				FC0DEEDE29F0559F00E249B6 /* Tests */,
 				FC3AAB4729EDA3480027AFDC /* VIews */,
 				FC3AAB4629EDA3400027AFDC /* ViewModel */,
 				FC3AAB4529EDA3380027AFDC /* Model */,
@@ -164,7 +181,6 @@
 				FC3AAB1D29ED9EFF0027AFDC /* ContentView.swift */,
 				FC3AAB4E29EDD04F0027AFDC /* StockDetailView.swift */,
 				FC3AAB5029EDDA120027AFDC /* AddStockView.swift */,
-				FC0DEEDC29EE03B000E249B6 /* Test.swift */,
 			);
 			path = VIews;
 			sourceTree = "<group>";
@@ -304,9 +320,9 @@
 				FC3AAB1C29ED9EFF0027AFDC /* innovation041023App.swift in Sources */,
 				FC3AAB4929EDA3680027AFDC /* Service.swift in Sources */,
 				FC3AAB5129EDDA120027AFDC /* AddStockView.swift in Sources */,
-				FC0DEEDD29EE03B000E249B6 /* Test.swift in Sources */,
 				FC3AAB4F29EDD04F0027AFDC /* StockDetailView.swift in Sources */,
 				FC3AAB4B29EDA38E0027AFDC /* AllModels.swift in Sources */,
+				FC0DEEE129F055BA00E249B6 /* ServiceMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

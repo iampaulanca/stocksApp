@@ -131,12 +131,8 @@ struct StockDetailView: View {
 
 struct StockDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        if let response = try? JSONDecoder().decode(Response.self, from: jsonData)
-        {
-            StockDetailView(viewModel: StocksViewModel(), stock: response)
-        } else {
-            Text("hello")
-        }
+            StockDetailView(viewModel: StocksViewModel(), stock: mockResponse)
+        
     }
 }
 
@@ -372,3 +368,4 @@ let jsonData: Data =
   }
 }
 """.data(using: .utf8)!
+let mockResponse = try! JSONDecoder().decode(Response.self, from: jsonData)
