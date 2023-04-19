@@ -1,4 +1,4 @@
-name: iOS crib scheduled workflow
+name: iOS cron scheduled workflow
 
 on:
   schedule:
