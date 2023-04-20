@@ -42,7 +42,7 @@ jobs:
           if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
           file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
           xcodebuild test-without-building -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device"
-     - name: PostTest
+      - name: PostTest
         run: |
           # Define the path pattern to the xcresult file using wildcards
           xcresult_file="/Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/Test-*.xcresult"
@@ -58,4 +58,5 @@ jobs:
             echo "xcresult file not found"
             # You can take appropriate actions if the xcresult file is not found, such as failing the workflow or skipping further steps.
           fi
+
           
