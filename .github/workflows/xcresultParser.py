@@ -4,12 +4,13 @@ import argparse
 import re
 import os
 import datetime
+import uuid
 
 
 class CodeCoverage:
-    def __init__(self, appName, id, filenames, linesCovered, totalLines):
+    def __init__(self, appName, uid, filenames, linesCovered, totalLines):
         self.appName = appName
-        self.id = id
+        self.uid = uid
         self.filenames = filenames
         self.linesCovered = linesCovered
         self.totalLines = totalLines
@@ -17,7 +18,8 @@ class CodeCoverage:
 
 
 class Filename:
-    def __init__(self, name, linesCovered, totalLines):
+    def __init__(self, uid, name, linesCovered, totalLines):
+        self.uid = uid  # foreign key for CodeCoverage
         self.name = name
         self.linesCovered = linesCovered
         self.totalLines = totalLines
@@ -42,8 +44,6 @@ result = subprocess.run(['xcrun', 'xcresulttool', 'get', '--format', 'json', '--
 if result.returncode != 0:
     print("Error converting .xcresult to JSON:", result.stderr)
 else:
-    # Load the JSON data
-    data = json.loads(result.stdout)
 
     # Run xccov command to generate code coverage report
     xccov_result = subprocess.run(['xcrun', 'xccov', 'view', '--report', xcresult_path], capture_output=True, text=True)
@@ -62,8 +62,8 @@ else:
         # Create Filename objects for each file with its name and coverage
         filenames = []
         # Create a CodeCoverage object with the extracted data
-
-        code_coverage = CodeCoverage(appName=xcresult_path, id=1, filenames=filenames, linesCovered=0, totalLines=0)
+        uuid = uuid.uuid4()
+        code_coverage = CodeCoverage(appName=xcresult_path, uid=uuid, filenames=filenames, linesCovered=0, totalLines=0)
         for match in matches:
             filename = os.path.basename(match[0])
             coverageString = match[2]
@@ -83,14 +83,14 @@ else:
                 code_coverage.linesCovered = lines_covered
                 code_coverage.totalLines = total_lines
             else:
-                filename_obj = Filename(name=filename, linesCovered=0, totalLines=0)
+                filename_obj = Filename(name=filename, uid=uuid, linesCovered=0, totalLines=0)
                 filename_obj.totalLines = total_lines
                 filename_obj.linesCovered = lines_covered
                 filenames.append(filename_obj)
 
         # Access the properties of the CodeCoverage object
         print("AppName: ", code_coverage.appName)
-        print("ID: ", code_coverage.id)
+        print("ID: ", code_coverage.uid)
         print("Timestamp: ", code_coverage.timestamp)
         total_coverage = (code_coverage.linesCovered / code_coverage.totalLines) * 100
         total_coverage_rounded = round(total_coverage, 2)
@@ -98,7 +98,8 @@ else:
         print(f"Total Coverage: {total_coverage_rounded}%")
         print()
         for filename_obj in code_coverage.filenames:
-            print("Filename: ", filename_obj.name)
+            print(f"Filename: {filename_obj.name}")
+            print(f"ID: {filename_obj.uid}")
             print(f"Lines Covered: {filename_obj.linesCovered}/{filename_obj.totalLines}")
             total_coverage = (filename_obj.linesCovered / filename_obj.totalLines) * 100
             total_coverage_rounded = round(total_coverage, 2)
