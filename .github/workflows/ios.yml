@@ -53,6 +53,7 @@ jobs:
             # Get the first matching xcresult file
             xcresult_file="${matching_files[0]}"
             echo "xcresult file found: $xcresult_file"
+            python3 .github/workflows/xcresultParser.py "$xcresult_file"
             # Do whatever you want with the xcresult file, for example, you can parse it using xcparse or xcresulttool or upload it to a storage service.
           else
             echo "xcresult file not found"

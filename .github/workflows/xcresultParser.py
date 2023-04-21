@@ -3,6 +3,23 @@ import json
 import argparse
 import re
 import os
+import datetime
+
+
+class CodeCoverage:
+    def __init__(self, appName, id, filenames, totalCoverage):
+        self.appName = appName
+        self.id = id
+        self.filenames = filenames
+        self.totalCoverage = totalCoverage
+        self.timestamp = datetime.datetime.now()
+
+
+class Filename:
+    def __init__(self, name, coverage):
+        self.name = name
+        self.coverage = coverage
+
 
 # Create an ArgumentParser object
 parser = argparse.ArgumentParser(description='Convert .xcresult to JSON and generate code coverage report.')
@@ -26,22 +43,6 @@ else:
     # Load the JSON data
     data = json.loads(result.stdout)
 
-    # Access and process the JSON data as needed
-    type_name = data["_type"]["_name"]
-    actions_type_name = data["actions"]["_type"]["_name"]
-    action_result_type_name = data["actions"]["_values"][0]["actionResult"]["_type"]["_name"]
-    result_name = data["actions"]["_values"][0]["actionResult"]["resultName"]["_value"]
-    status_value = data["actions"]["_values"][0]["actionResult"]["status"]["_value"]
-    metrics_tests_count_value = data["actions"]["_values"][0]["actionResult"]["metrics"]["testsCount"]["_value"]
-
-    # Print the extracted values
-    print("Type name: ", type_name)
-    print("Actions type name: ", actions_type_name)
-    print("Action result type name: ", action_result_type_name)
-    print("Result name: ", result_name)
-    print("Status value: ", status_value)
-    print("Metrics tests count value: ", metrics_tests_count_value)
-
     # Run xccov command to generate code coverage report
     xccov_result = subprocess.run(['xcrun', 'xccov', 'view', '--report', xcresult_path], capture_output=True, text=True)
 
@@ -56,19 +57,27 @@ else:
 
         # Print the extracted file paths and code coverage information
         print("\nCode Coverage Report:")
+        # Create Filename objects for each file with its name and coverage
+        filenames = []
+        # Create a CodeCoverage object with the extracted data
+
+        code_coverage = CodeCoverage(appName=xcresult_path, id=1, filenames=filenames,
+                                     totalCoverage=0)
         for match in matches:
-            file_path = match[0]
+            filename = os.path.basename(match[0])
             coverage = match[2]
-            file_name = os.path.basename(file_path)
+            if filename.endswith(".app"):
+                code_coverage.appName = filename
+                code_coverage.totalCoverage = coverage
+            else:
+                filename_obj = Filename(name=filename, coverage=coverage)
+                filenames.append(filename_obj)
 
-            coverage_data.append({
-                'File': file_name,
-                'Coverage': coverage
-            })
-            # print("File: {}".format(file_name))
-            # print("Coverage: {}".format(coverage))
-            # print("------------------")
-
-        # Convert the coverage data to JSON format
-        coverage_json = json.dumps(coverage_data, indent=4)
-        print(coverage_json)
+        # Access the properties of the CodeCoverage object
+        print("AppName: ", code_coverage.appName)
+        print("ID: ", code_coverage.id)
+        print("Timestamp: ", code_coverage.timestamp)
+        print("Total Coverage: ", code_coverage.totalCoverage)
+        for filename_obj in code_coverage.filenames:
+            print("Filename: ", filename_obj.name)
+            print("Coverage: ", filename_obj.coverage)
