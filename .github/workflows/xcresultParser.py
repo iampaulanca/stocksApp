@@ -5,12 +5,13 @@ import re
 import os
 import datetime
 import uuid
+from pymongo import MongoClient
 
 
 class CodeCoverage:
-    def __init__(self, appName, uid, filenames, linesCovered, totalLines):
+    def __init__(self, appName, uuid, filenames, linesCovered, totalLines):
         self.appName = appName
-        self.uid = uid
+        self.uuid = str(uuid)
         self.filenames = filenames
         self.linesCovered = linesCovered
         self.totalLines = totalLines
@@ -18,12 +19,11 @@ class CodeCoverage:
 
 
 class Filename:
-    def __init__(self, uid, name, linesCovered, totalLines):
-        self.uid = uid  # foreign key for CodeCoverage
+    def __init__(self, uuid, name, linesCovered, totalLines):
+        self.uuid = str(uuid)
         self.name = name
         self.linesCovered = linesCovered
         self.totalLines = totalLines
-
 
 # Create an ArgumentParser object
 parser = argparse.ArgumentParser(description='Convert .xcresult to JSON and generate code coverage report.')
@@ -31,11 +31,27 @@ parser = argparse.ArgumentParser(description='Convert .xcresult to JSON and gene
 # Add a positional argument for the .xcresult file path
 parser.add_argument('xcresult_path', type=str, help='Path to the .xcresult file')
 
+# Add an argument for the MongoDB username
+parser.add_argument('--username', type=str, help='MongoDB username')
+
+# Add an argument for the MongoDB password
+parser.add_argument('--password', type=str, help='MongoDB password')
+
 # Parse the command-line arguments
 args = parser.parse_args()
 
 # Access the value of the .xcresult file path argument
 xcresult_path = args.xcresult_path
+
+# Access the value of the MongoDB username argument
+mongo_username = args.username
+
+# Access the value of the MongoDB password argument
+mongo_password = args.password
+
+client = MongoClient(f'mongodb+srv://{mongo_username}:{mongo_password}@innovation041023.wl0zubh.mongodb.net/?retryWrites=true&w=majority')
+db = client['testing_database']
+collection = db['code_coverage']
 
 # Run xcresulttool command to convert .xcresult to JSON
 result = subprocess.run(['xcrun', 'xcresulttool', 'get', '--format', 'json', '--path', xcresult_path], capture_output=True, text=True)
@@ -63,7 +79,7 @@ else:
         filenames = []
         # Create a CodeCoverage object with the extracted data
         uuid = uuid.uuid4()
-        code_coverage = CodeCoverage(appName=xcresult_path, uid=uuid, filenames=filenames, linesCovered=0, totalLines=0)
+        code_coverage = CodeCoverage(appName=xcresult_path, uuid=uuid, filenames=filenames, linesCovered=0, totalLines=0)
         for match in matches:
             filename = os.path.basename(match[0])
             coverageString = match[2]
@@ -83,25 +99,40 @@ else:
                 code_coverage.linesCovered = lines_covered
                 code_coverage.totalLines = total_lines
             else:
-                filename_obj = Filename(name=filename, uid=uuid, linesCovered=0, totalLines=0)
+                filename_obj = Filename(name=filename, uuid=uuid, linesCovered=0, totalLines=0)
                 filename_obj.totalLines = total_lines
                 filename_obj.linesCovered = lines_covered
                 filenames.append(filename_obj)
 
+        filenames_dict = [{'name': f.name, 'uuid': f.uuid, 'linesCovered': f.linesCovered, 'totalLines': f.totalLines}
+                          for f in filenames]
+
+        code_coverage_dict = {
+            'appName': code_coverage.appName,
+            'uuid': code_coverage.uuid,
+            'filenames': filenames_dict,
+            'linesCovered': code_coverage.linesCovered,
+            'totalLines': code_coverage.totalLines,
+            'timestamp': code_coverage.timestamp
+        }
+
+        collection.insert_one(code_coverage_dict)
+        client.close()
+
         # Access the properties of the CodeCoverage object
-        print("AppName: ", code_coverage.appName)
-        print("ID: ", code_coverage.uid)
-        print("Timestamp: ", code_coverage.timestamp)
-        total_coverage = (code_coverage.linesCovered / code_coverage.totalLines) * 100
+        print("AppName: ", code_coverage_dict['appName'])
+        print("ID: ", code_coverage_dict['uuid'])
+        print("Timestamp: ", code_coverage_dict['timestamp'])
+        total_coverage = (code_coverage_dict['linesCovered'] / code_coverage_dict['totalLines']) * 100
         total_coverage_rounded = round(total_coverage, 2)
-        print(f"Lines Covered: {code_coverage.linesCovered}/{code_coverage.totalLines}")
+        print(f"Lines Covered: {code_coverage_dict['linesCovered']}/{code_coverage_dict['totalLines']}")
         print(f"Total Coverage: {total_coverage_rounded}%")
         print()
-        for filename_obj in code_coverage.filenames:
-            print(f"Filename: {filename_obj.name}")
-            print(f"ID: {filename_obj.uid}")
-            print(f"Lines Covered: {filename_obj.linesCovered}/{filename_obj.totalLines}")
-            total_coverage = (filename_obj.linesCovered / filename_obj.totalLines) * 100
+        for filename_obj in code_coverage_dict['filenames']:
+            print(f"Filename: {filename_obj['name']}")
+            print(f"ID: {filename_obj['uuid']}")
+            print(f"Lines Covered: {filename_obj['linesCovered']}/{filename_obj['totalLines']}")
+            total_coverage = (filename_obj['linesCovered'] / filename_obj['totalLines']) * 100
             total_coverage_rounded = round(total_coverage, 2)
             print(f"Total Coverage: {total_coverage_rounded}%")
             print()
