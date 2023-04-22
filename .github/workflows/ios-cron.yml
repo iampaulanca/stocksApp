@@ -40,3 +40,22 @@ jobs:
           if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
           file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
           xcodebuild test-without-building -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device"
+      - name: PostTest
+        run: |
+          # Define the path pattern to the xcresult file using wildcards
+          xcresult_file="/Users/runner/Library/Developer/Xcode/DerivedData/*/Logs/Test/Test-*.xcresult"
+          # Find xcresult file matching the pattern
+          matching_files=( $xcresult_file )
+          # Check if xcresult file exists
+          if [ ${#matching_files[@]} -gt 0 ]; then
+            # Get the first matching xcresult file
+            xcresult_file="${matching_files[0]}"
+            echo "xcresult file found: $xcresult_file"
+            pip3 install pymongo
+            echo "installing pymongo"
+            python3 .github/workflows/xcresultParser.py "$xcresult_file" --username ${{ secrets.MONGO_USERNAME }} --password ${{ secrets.MONGO_PASSWORD }}
+            # Do whatever you want with the xcresult file, for example, you can parse it using xcparse or xcresulttool or upload it to a storage service.
+          else
+            echo "xcresult file not found"
+            # You can take appropriate actions if the xcresult file is not found, such as failing the workflow or skipping further steps.
+          fi

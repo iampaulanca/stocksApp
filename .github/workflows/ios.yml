@@ -61,5 +61,3 @@ jobs:
             echo "xcresult file not found"
             # You can take appropriate actions if the xcresult file is not found, such as failing the workflow or skipping further steps.
           fi
-
-          
